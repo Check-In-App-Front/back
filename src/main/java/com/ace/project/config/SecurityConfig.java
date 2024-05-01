@@ -15,6 +15,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.ace.project.jwt.JWTFilter;
 import com.ace.project.jwt.JWTUtil;
+import com.ace.project.oauth2.CustomSuccessHandler;
 import com.ace.project.service.CustomOAuth2UserService;
 
 import java.util.Collections;
@@ -24,8 +25,9 @@ import java.util.Collections;
 @AllArgsConstructor
 public class SecurityConfig {
 	
-	private final CustomOAuth2UserService customOAuth2UserService;
 	private final JWTUtil jwtUtil;
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final CustomSuccessHandler customSuccessHandler;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -67,6 +69,7 @@ public class SecurityConfig {
 		http.oauth2Login((oauth2) -> oauth2
                 .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                 .userService(customOAuth2UserService))
+                .successHandler(customSuccessHandler)
         );
 	
 		//경로별 인가 작업(일단 전체 열어둠)
