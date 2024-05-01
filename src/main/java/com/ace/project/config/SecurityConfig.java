@@ -9,9 +9,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.ace.project.jwt.JWTFilter;
+import com.ace.project.jwt.JWTUtil;
 import com.ace.project.service.CustomOAuth2UserService;
 
 import java.util.Collections;
@@ -22,6 +25,7 @@ import java.util.Collections;
 public class SecurityConfig {
 	
 	private final CustomOAuth2UserService customOAuth2UserService;
+	private final JWTUtil jwtUtil;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -55,6 +59,9 @@ public class SecurityConfig {
 	
 	    //HTTP Basic 인증 방식 disable
 	    http.httpBasic((auth) -> auth.disable());
+	    
+	    //JWTFilter
+		http.addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 	    
 	    //oauth2
 		http.oauth2Login((oauth2) -> oauth2
