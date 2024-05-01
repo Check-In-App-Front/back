@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
+	
 	private final UserDTO userDTO;
 	
 	// 사용 X, email 따로 추가
