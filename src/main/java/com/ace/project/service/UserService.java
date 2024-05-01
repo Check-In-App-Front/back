@@ -31,7 +31,9 @@ public class UserService {
 		
 		return userRepository.save(userEntity);
 	}
-
+	
+	
+	// 닉네임 중복확인
 	public boolean checkNickname(String nickname) {
 		return userRepository.existsByNickname(nickname);
 	}
