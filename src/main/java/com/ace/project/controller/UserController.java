@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ace.project.dto.UserDTO;
 import com.ace.project.entity.User;
@@ -19,8 +20,8 @@ public class UserController {
 	private final UserService userService;
 	
 	@Operation(summary = "회원가입")
-	@PostMapping("signUp")
-	public ResponseEntity<?> join(UserDTO userDTO) {
+	@PostMapping("/signUp")
+	public ResponseEntity<?> join(@RequestBody UserDTO userDTO) {
 		User user = userService.join(userDTO);
 
 	    if (user != null) {
