@@ -1,5 +1,7 @@
 package com.ace.project.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +21,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(TokenController.class);
+	
 	private final UserService userService;
 	
 	@Operation(summary = "회원가입")
 	@PostMapping("/signUp")
 	public ResponseEntity<?> join(@RequestBody UserDTO userDTO) {
+		
+		logger.debug("UserController :: join");
+		
 		User user = userService.join(userDTO);
 
 	    if (user != null) {
@@ -36,6 +43,9 @@ public class UserController {
 	@Operation(summary = "닉네임 중복 확인")
 	@GetMapping("/isExist/{nickname}")
 	public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
+		
+		logger.debug("UserController :: checkNickname");
+		
 		boolean isDuplicate  = userService.checkNickname(nickname);
 		
 		return ResponseEntity.ok(isDuplicate);

@@ -1,5 +1,7 @@
 package com.ace.project.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ace.project.dto.UserDTO;
@@ -12,10 +14,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	
 	private final UserRepository userRepository;
 
 	// 회원가입
 	public User join(UserDTO userDTO) {
+		
+		logger.debug("UserService :: join");
 
 		UserDTO user = UserDTO.builder()
 				.nickname(userDTO.getNickname())
@@ -35,6 +41,9 @@ public class UserService {
 	
 	// 닉네임 중복확인
 	public boolean checkNickname(String nickname) {
+		
+		logger.debug("UserService :: 중복확인");
+		
 		return userRepository.existsByNickname(nickname);
 	}
 

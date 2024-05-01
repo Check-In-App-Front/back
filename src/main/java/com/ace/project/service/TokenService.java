@@ -2,6 +2,8 @@ package com.ace.project.service;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(TokenService.class);
+	
 	private final JWTUtil jwtUtil;
 	private final RefreshRepository refreshRepository;
 	
 	// Refresh로 Access 토큰 재발급
 	public ResponseEntity<?> tokenReissue(HttpServletRequest request, HttpServletResponse response) {
+		
+		logger.debug("TokenService :: tokenReissue");
+		
 		// get refresh token
 	    String refresh = null;
 	    
