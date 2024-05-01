@@ -4,12 +4,16 @@ import com.ace.project.entity.User;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class UserDTO {
-private Long   id;
+	
+	private Long   id;
     
 	@Size(max=12, message="최대 12글자까지 입력 가능합니다.")
     private String nickname;
