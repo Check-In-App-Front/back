@@ -12,12 +12,16 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.ace.project.service.CustomOAuth2UserService;
+
 import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
+	
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,6 +55,12 @@ public class SecurityConfig {
 	
 	    //HTTP Basic 인증 방식 disable
 	    http.httpBasic((auth) -> auth.disable());
+	    
+	    //oauth2
+		http.oauth2Login((oauth2) -> oauth2
+                .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                .userService(customOAuth2UserService))
+        );
 	
 		//경로별 인가 작업(일단 전체 열어둠)
 		http.authorizeHttpRequests((auth) -> auth
