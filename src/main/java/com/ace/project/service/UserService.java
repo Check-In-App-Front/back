@@ -32,4 +32,8 @@ public class UserService {
 		return userRepository.save(userEntity);
 	}
 
+	public boolean checkNickname(String nickname) {
+		return userRepository.existsByNickname(nickname);
+	}
+
 }

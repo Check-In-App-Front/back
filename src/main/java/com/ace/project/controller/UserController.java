@@ -2,6 +2,8 @@ package com.ace.project.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,4 +32,13 @@ public class UserController {
 	      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("사용자 생성 실패");
 	    }
 	 }
+	
+	@Operation(summary = "닉네임 중복 확인")
+	@GetMapping("/isExist/{nickname}")
+	public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
+		boolean isDuplicate  = userService.checkNickname(nickname);
+		
+		return ResponseEntity.ok(isDuplicate);
+	}
+
 }
